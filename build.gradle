@@ -2,6 +2,8 @@ plugins {
     id 'org.springframework.boot' version '2.7.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    // 도커 실습
+    id 'com.google.cloud.tools.jib' version '3.3.1'
 }
 
 group 'nextstep'
@@ -26,4 +28,18 @@ dependencies {
 }
 test {
     useJUnitPlatform()
+}
+
+// 도커 실습
+jib {
+    from {
+        image = "adoptopenjdk/openjdk11"
+    }
+    to {
+        image = "idock.daumkakao.io/onboarding2023/jerrie.choi"
+        tags = [ "latest" ]
+    }
+    container {
+        ports = [ "8080" ]
+    }
 }
